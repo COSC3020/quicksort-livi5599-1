@@ -130,14 +130,15 @@ function quicksort(array) {
     
 }
 
+//issue with finding pivot
 function placePivot(a, low, high) {
     let pivot = null;
     let pivArr = [];
     let lowEl = a[low];
     console.log("lowEL = ", lowEl);
-    if (high - low <= 2) {
+    if ((high - low) + 1 <= 2) {
         console.log("2 or less elements, so no midEl");
-        let midEl = null;
+        var midEl = null;
     }
     else {
         midEl = a[Math.floor((high - low) / 2)];
@@ -152,7 +153,7 @@ function placePivot(a, low, high) {
         pivot = highEl;
         a[a.indexOf(lowEl)] = pivArr[0];
         a[a.indexOf(highEl)] = pivot;
-
+        console.log("a after null midEl pivot placement = ", a);
     }
     else {
         pivArr.push(lowEl, midEl, highEl);
@@ -165,10 +166,21 @@ function placePivot(a, low, high) {
 
         pivot = pivArr[1];
 
-        a[a.indexOf(lowEl)] = pivArr[0];
-        a[a.indexOf(midEl)] = pivot;
-        a[a.indexOf(highEl)] = pivArr[2];
-        console.log
+        // [a[low], a[a.indexOf(lowEl)]] = [a[a.indexOf(lowEl)], a[low]];
+        // [a[Math.floor((high - low) / 2)], a[a.indexOf(midEl)]] = [a[a.indexOf(midEl)], a[Math.floor((high - low) / 2)]];
+        // [a[high], a[a.indexOf(highEl)]] = [a[a.indexOf(highEl)], a[high]];
+
+        [a[a.indexOf(lowEl)], a[a.indexOf(pivArr[0])]] = [a[a.indexOf(pivArr[0])], a[a.indexOf(lowEl)]];
+        [a[a.indexOf(midEl)], a[a.indexOf(pivot)]] = [a[a.indexOf(pivot)], a[a.indexOf(midEl)]];
+        [a[a.indexOf(highEl)], a[a.indexOf(pivArr[2])]] = [a[a.indexOf(pivArr[2])], a[a.indexOf(highEl)]];
+
+        // a[a.indexOf(lowEl)] = pivArr[0];
+        // console.log("array after ", pivArr[0], " is placed = ", a);
+        // a[a.indexOf(midEl)] = pivot;
+        // console.log("array after ", pivot, " is placed = ", a);
+        // a[a.indexOf(highEl)] = pivArr[2];
+        // console.log("array after ", pivArr[2], " is placed = ", a);
+        console.log("a after regular pivot placement = ", a);
     }
 
     return pivot;
@@ -231,5 +243,6 @@ function isSorted(a) {
     // }
     // return array;
 
-let arr = [3, 0, 1, 8, 7, 2, 5, 4, 9, 6];
+//let arr = [3, 0, 1, 8, 7, 2, 5, 4, 9, 6];
+let arr = [2, 3, 1];
 console.log(quicksort(arr));
