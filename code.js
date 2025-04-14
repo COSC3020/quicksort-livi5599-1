@@ -1,4 +1,15 @@
 function quicksort(array) {
+    if (array.length < 2) {
+        return array;
+    }
+
+    if (array.length == 2) {
+        if (!isSorted(array)) {
+            array.sort();
+        }
+        return array;
+    }
+    
     let stack = [];
     stack.push(0);
     stack.push(array.length - 1);
@@ -83,3 +94,6 @@ function isSorted(a) {
     }
     return sorted;
 }
+
+let arr = [2, 3, 5, 1, 4, 7, 6, 9, 8];
+console.log(quicksort(arr));
