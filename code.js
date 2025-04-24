@@ -5,7 +5,7 @@ function quicksort(array) {
 
     if (array.length == 2) {
         if (!isSorted(array)) {
-            array.sort();
+            array.sort((a, b) => a - b);
         }
         return array;
     }
