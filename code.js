@@ -18,9 +18,9 @@ function quicksort(array) {
         high = stack.pop();
         low = stack.pop();
         let [pivot, pivIndex] = placePivot(array, low, high);
-        if (isSorted(array)) {
-            return array;
-        }
+        // if (isSorted(array)) {
+        //     return array;
+        // }
         for (let i = array.length - 1; i >= 0; i--) {
             if (array[i] == pivot && i == pivIndex) {
                 continue;
@@ -34,9 +34,9 @@ function quicksort(array) {
                 array.splice(i+1, 1);
             }
         }
-        if (isSorted(array)) {
-            return array;
-        }
+        // if (isSorted(array)) {
+        //     return array;
+        // }
 
         if (pivIndex > 0) {
             stack.push(0);
