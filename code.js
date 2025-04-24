@@ -34,7 +34,7 @@ function quicksort(array) {
             }
             else if (array[i] > pivot && i < pivIndex) {
                 console.log(array[i], "> pivot and ", i, "< pivot index");
-                array.splice(array.indexOf(pivot) + 1, 0, array[i]);
+                array.splice(pivIndex + 1, 0, array[i]);
                 console.log("array after 1st splice = ", array);
                 array.splice(i, 1);
                 console.log("array after 2nd splice = ", array);
@@ -54,13 +54,13 @@ function quicksort(array) {
         if (pivIndex > 0) {
             console.log("elements to the left of pivot");
             stack.push(0);
-            stack.push(array.indexOf(pivot) - 1);
+            stack.push(pivIndex - 1);
             console.log("updated stack = ", stack);
         }
 
         if (pivIndex < array.length - 1 && pivIndex + 1 < array.length - 1) {
             console.log("elements to the right of pivot");
-            stack.push(array.indexOf(pivot) + 1);
+            stack.push(pivIndex + 1);
             stack.push(array.length - 1);
             console.log("updated stack = ", stack);
         }
