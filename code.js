@@ -13,53 +13,37 @@ function quicksort(array) {
     let stack = [];
     stack.push(0);
     stack.push(array.length - 1);
+    console.log("stack = ", stack);
 
     while (stack.length > 1) {
         high = stack.pop();
         low = stack.pop();
-        let [pivot, pivIndex] = placePivot(array, low, high);
-        // if (isSorted(array)) {
-        //     return array;
-        // }
-        for (let i = array.length - 1; i >= 0; i--) {
-            if (array[i] == pivot && i == pivIndex) {
-                continue;
-            }
-            else if (array[i] > pivot && i < pivIndex) {
-                array.splice(pivIndex + 1, 0, array[i]);
-                array.splice(i, 1);
-            }
-            else if (array[i] < pivot && i > pivIndex) {
-                array.unshift(array[i]);
-                array.splice(i+1, 1);
-            }
-        }
-        // if (isSorted(array)) {
-        //     return array;
-        // }
-
-        if (pivIndex > 0) {
-            stack.push(0);
-            stack.push(pivIndex - 1);
+        let pivPos = partition(array, low, high);
+        if (pivPos-1 > low) {
+            stack.push(low);
+            stack.push(pivPos-1);
         }
 
-        if (pivIndex < array.length - 1 && pivIndex + 1 < array.length - 1) {
-            stack.push(pivIndex + 1);
-            stack.push(array.length - 1);
+        if (pivPos+1 < high) {
+            stack.push(pivPos+1);
+            stack.push(high);
         }
     }
     return array;
 }
 
-function placePivot(a, low, high) {
+function partition(a, low, high) {
+    let i = low - 1; //used to determine which elements are <= pivot
+    //pick the pivot
     let pivot = null;
-    let pivIndex = null;
     let pivArr = [];
     if ((high - low) + 1 <= 2) {
         var mid = null;
+        console.log("mid set to null");
     }
     else {
         mid = Math.floor((high - low) / 2);
+        console.log("mid = ", mid);
     }
 
     if (mid == null) {
@@ -67,27 +51,46 @@ function placePivot(a, low, high) {
         if (!isSorted(pivArr)) {
             pivArr.sort();
         }
+        console.log("pivArr = ", pivArr);
         pivot = a[high];
-        pivIndex = a.indexOf(pivot);
-        a[low] = pivArr[0];
-        a[high] = pivot;
+        console.log("pivot = ", pivot);
+
+        for (let j = low; j < high; j++) {
+            if (a[j] <= pivot) {
+                i++;
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+        }
+        [a[i+1], a[high]] = [a[high], a[i+1]];
+        console.log("a after pivot is placed = ", a);
+        return i+1;
     }
     else {
         pivArr.push(a[low], a[mid], a[high]);
+        console.log("pivArr = ", pivArr);
 
         if (!isSorted(pivArr)) {
             pivArr.sort();
         }
+        console.log("pivArr = ", pivArr);
 
         pivot = pivArr[1];
-        pivIndex = a.indexOf(pivot);
- 
-        a[low] = pivArr[0];
-        a[mid] = pivot;
-        a[high] = pivArr[2];
-        
+        let pivIndex = a.indexOf(pivot);
+        console.log("pivot = ", pivot);
+        console.log("pivIndex = ", pivIndex);
+
+        for (let j = low; j < high; j++) {
+            if (a[j] <= pivot) {
+                i++;
+                [a[i], a[j]] = [a[j], a[i]];
+                console.log("edited a = ", a);
+            }
+        }
+        [a[i+1], a[pivIndex]] = [a[pivIndex], a[i+1]];
+        console.log("a after pivot is placed = ", a);
+        console.log("returning ", i+1);
+        return i+1;
     }
-    return [pivot, pivIndex];
 }
 
 function isSorted(a) {
