@@ -75,11 +75,11 @@ function partition(a, low, high) {
     let j = high+1;
     while (true) {
         do {
-            i++;
+            ++i;
         } while (a[i] < pivot);
 
         do {
-            j--;
+            --j;
         } while (a[j] > pivot);
 
         if (i >= j) {
