@@ -15,7 +15,7 @@ function quicksort(array) {
     stack.push(array.length - 1);
     console.log("stack = ", stack);
 
-    while (stack.length > 1) {
+    while (stack.length > 0) {
         high = stack.pop();
         low = stack.pop();
         let pivPos = partition(array, low, high);
@@ -33,7 +33,7 @@ function quicksort(array) {
 }
 
 function partition(a, low, high) {
-    let i = low - 1; //used to determine which elements are <= pivot
+    //let i = low - 1; //used to determine which elements are <= pivot
     //pick the pivot
     let pivot = null;
     let pivArr = [];
@@ -54,16 +54,6 @@ function partition(a, low, high) {
         console.log("pivArr = ", pivArr);
         pivot = a[high];
         console.log("pivot = ", pivot);
-
-        for (let j = low; j < high; j++) {
-            if (a[j] <= pivot) {
-                i++;
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-        }
-        [a[i+1], a[high]] = [a[high], a[i+1]];
-        console.log("a after pivot is placed = ", a);
-        return i+1;
     }
     else {
         pivArr.push(a[low], a[mid], a[high]);
@@ -75,22 +65,39 @@ function partition(a, low, high) {
         console.log("pivArr = ", pivArr);
 
         pivot = pivArr[1];
-        let pivIndex = a.indexOf(pivot);
+        //let pivIndex = a.indexOf(pivot);
         console.log("pivot = ", pivot);
-        console.log("pivIndex = ", pivIndex);
-
-        for (let j = low; j < high; j++) {
-            if (a[j] <= pivot) {
-                i++;
-                [a[i], a[j]] = [a[j], a[i]];
-                console.log("edited a = ", a);
-            }
-        }
-        [a[i+1], a[pivIndex]] = [a[pivIndex], a[i+1]];
-        console.log("a after pivot is placed = ", a);
-        console.log("returning ", i+1);
-        return i+1;
+        //console.log("pivIndex = ", pivIndex);
     }
+    
+    //let pivIndex = a.indexOf(pivot, low);
+    let i = low-1;
+    let j = high+1;
+    while (true) {
+        do {
+            i++;
+        } while (a[i] < pivot);
+
+        do {
+            j--;
+        } while (a[j] > pivot);
+
+        if (i >= j) {
+            return j;
+        }
+
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    // for (let j = low; j <= high; j++) {
+    //     if (a[j] < pivot && j > pivIndex) {
+    //         console.log(a[j], " is less than pivot but is to the right of pivot");
+
+    //     }
+    // }
+
+    // [a[i+1], a[pivIndex]] = [a[pivIndex], a[i+1]];
+    // console.log("a after pivot placement = ", a);
+    // return i+1;
 }
 
 function isSorted(a) {
