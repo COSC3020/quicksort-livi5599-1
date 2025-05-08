@@ -35,16 +35,21 @@ function quicksort(array) {
 function partition(a, low, high) {
     let mid = low + Math.floor((high - low) / 2);
     let pivArr = [a[low], a[mid], a[high]].sort((x, y) => x - y);
-    let pivot = pivArr[1];
+    let pivotVal = pivArr[1];
 
-    let i = low - 1;
-    let j = high + 1;
-    while (true) {
-        do {++i;} while (a[i] < pivot);
-        do {--j;} while (a[j] > pivot);
-        if (i >= j) return j;
-        [a[i], a[j]] = [a[j], a[i]];
+    let pivotIndex = a.indexOf(pivotVal, low);
+    [a[pivotIndex], a[high]] = [a[high], a[pivotIndex]];
+
+    let i = low;
+    for (let j = low; j < high; j++) {
+        if (a[j] <= pivotVal) {
+            [a[i], a[j]] = [a[j], a[i]];
+            i++;
+        }
     }
+
+    [a[i], a[high]] = [a[high], a[i]];
+    return i;
 }
 
 function isSorted(a) {
