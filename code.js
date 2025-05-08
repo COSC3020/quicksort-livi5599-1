@@ -1,4 +1,4 @@
-function quicksort(array) { O(nlogn)
+function quicksort(array) { //O(nlogn)
     if (array.length < 2) { //O(1)
         return array;
     }
