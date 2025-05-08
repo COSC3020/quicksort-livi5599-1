@@ -13,7 +13,6 @@ function quicksort(array) {
     let stack = [];
     stack.push(0);
     stack.push(array.length - 1);
-    console.log("stack = ", stack);
 
     while (stack.length > 0) {
         high = stack.pop();
